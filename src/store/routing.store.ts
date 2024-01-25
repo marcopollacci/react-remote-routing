@@ -19,14 +19,14 @@ const EMPTY_PAGE: getCurrentPageType = {
 };
 
 const routingStore = create<RoutingStoreInterface>()(
-  devtools((set, _get) => ({
+  devtools((set, get) => ({
     listOfPages: [],
     rewriteListOfPages: (listOfPages: LoadingComponentProps[]) => {
       set({ listOfPages });
     },
-    getHomePage: () => getRequestedPage("/", _get().listOfPages),
+    getHomePage: () => getRequestedPage("/", get().listOfPages),
     getCurrentPage: (location: string) =>
-      getRequestedPage(location, _get().listOfPages),
+      getRequestedPage(location, get().listOfPages),
   })),
 );
 
