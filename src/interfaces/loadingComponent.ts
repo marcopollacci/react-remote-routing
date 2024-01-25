@@ -11,3 +11,5 @@ export interface LoadingComponentFromBEProps {
     component: string;
     name: string;
 }
+
+export type getCurrentPageType = Omit<LoadingComponentProps, 'component'>

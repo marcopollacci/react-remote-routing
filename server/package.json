@@ -8,7 +8,7 @@
     "start": "nodemon index.js"
   },
   "type": "module",
-  "author": "",
+  "author": "Marco Pollacci",
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^8.5.0",

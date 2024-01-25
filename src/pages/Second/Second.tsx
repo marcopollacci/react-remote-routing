@@ -1,9 +1,8 @@
 import {Link} from "wouter";
 
-export default function Pluto() {
+export default function Second() {
     return (
         <div>
-            <h1>Pluto</h1>
             <Link to="/">Home</Link><br/>
         </div>
     )

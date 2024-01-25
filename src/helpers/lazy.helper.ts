@@ -11,8 +11,7 @@ export function lazyLoadComponent<T>(
             ).then((module) => ({
             default: module.default,
         })).catch(
-            (error) => {
-                console.error("Component Failed Loading:", error);
+            () => {
                 return {default: PageNotFound};
             }
         )

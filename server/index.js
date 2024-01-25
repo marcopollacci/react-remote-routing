@@ -19,14 +19,14 @@ fastify.get('/', function (request, reply) {
             name: 'Home'
         },
         {
-            path: '/marco',
-            component: 'Marco',
-            name: 'Marco'
+            path: '/first',
+            component: 'First',
+            name: 'First'
         },
         {
-            path: '/pippo',
-            component: 'Pippo',
-            name: 'Pippo'
+            path: '/third',
+            component: 'Third',
+            name: 'Third'
         }
     ])
 })
