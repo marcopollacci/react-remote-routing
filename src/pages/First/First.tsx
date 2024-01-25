@@ -19,8 +19,9 @@ export default function Refactor() {
           <LazyHi />
         </>
       )}
-
-      <Link to={path}>{name}</Link>
+      <Link style={{ marginTop: "1em", display: "block" }} to={path}>
+        {name}
+      </Link>
     </div>
   );
 }
