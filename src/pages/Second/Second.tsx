@@ -1,9 +1,13 @@
-import {Link} from "wouter";
+import { Link } from "wouter";
+import { useRoutingStore } from "../../store/routing.store.ts";
 
 export default function Second() {
-    return (
-        <div>
-            <Link to="/">Home</Link><br/>
-        </div>
-    )
+  const { getHomePage } = useRoutingStore();
+  const { name, path } = getHomePage();
+  return (
+    <div>
+      <Link to={path}>{name}</Link>
+      <br />
+    </div>
+  );
 }

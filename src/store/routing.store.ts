@@ -1,39 +1,56 @@
-import {create} from "zustand";
-import {devtools} from "zustand/middleware";
-import {getCurrentPageType, LoadingComponentProps} from "../interfaces/loadingComponent.ts";
-import {staticRouting} from "../routing/routing.static.ts";
-import {createTrackedSelector} from "react-tracked";
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
+import {
+  getCurrentPageType,
+  LoadingComponentProps,
+} from "../interfaces/loadingComponent.ts";
+import { createTrackedSelector } from "react-tracked";
 
 interface RoutingStoreInterface {
-    listOfPages: LoadingComponentProps[];
-    rewriteListOfPages: (listOfPages: LoadingComponentProps[]) => void;
-    getCurrentPage: (location: string) => getCurrentPageType;
+  listOfPages: LoadingComponentProps[];
+  rewriteListOfPages: (listOfPages: LoadingComponentProps[]) => void;
+  getCurrentPage: (location: string) => getCurrentPageType;
+  getHomePage: () => getCurrentPageType;
 }
 
 const EMPTY_PAGE: getCurrentPageType = {
-    path: "",
-    name: ""
+  path: "",
+  name: "",
 };
 
-
 const routingStore = create<RoutingStoreInterface>()(
-    devtools((set, _get) => ({
-        listOfPages: staticRouting,
-        rewriteListOfPages: (listOfPages: LoadingComponentProps[]) => {
-            set({listOfPages});
-        },
-        getCurrentPage: (location: string) => {
-            const pageRequested = _get().listOfPages.find((page) => page.path === location);
-            if (!pageRequested) {
-                return EMPTY_PAGE;
-            }
-            return {
-                path: pageRequested.path,
-                name: pageRequested.name,
-            } as getCurrentPageType;
-        }
-    }))
+  devtools((set, _get) => ({
+    listOfPages: [],
+    rewriteListOfPages: (listOfPages: LoadingComponentProps[]) => {
+      set({ listOfPages });
+    },
+    getHomePage: () => getRequestedPage("/", _get().listOfPages),
+    getCurrentPage: (location: string) =>
+      getRequestedPage(location, _get().listOfPages),
+  })),
 );
 
-export const useRoutingStore = createTrackedSelector(routingStore);
+/**
+ * The function `getRequestedPage` takes a location and a list of pages, and returns the page object that matches the given
+ * location.
+ * @param {string} location - A string representing the current location or path of the page being requested.
+ * @param {LoadingComponentProps[]} listOfPage - An array of objects representing different pages. Each object has the
+ * following properties:
+ * @returns The function `getRequestedPage` returns an object of type `getCurrentPageType` which has properties `path` and
+ * `name`.
+ */
+const getRequestedPage = (
+  location: string,
+  listOfPage: LoadingComponentProps[],
+) => {
+  const pageRequested = listOfPage.find((page) => page.path === location);
+  if (!pageRequested) {
+    return EMPTY_PAGE;
+  }
+  return {
+    path: pageRequested.path,
+    name: pageRequested.name,
+  } as getCurrentPageType;
+};
 
+export const useRoutingStore = createTrackedSelector(routingStore);
